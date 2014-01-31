@@ -2,12 +2,22 @@ from django.db import models
 
 from slides.asset.models import Asset
 
-# Create your models here.
+
+
 class Presentation(models.Model):
     name = models.CharField(max_length=30, blank=False, null=False)
     slug = models.SlugField(max_length=15, blank=False, null=False)
 
-    assets = models.ManyToManyField(Asset)
+    assets = models.ManyToManyField(Asset, through='PresentationAsset')
 
     def __unicode__(self):
         return u'%s' % (self.name)
+
+
+class PresentationAsset(models.Model):
+    presentation = models.ForeignKey(Presentation)
+    asset = models.ForeignKey(Asset)
+
+    order = models.IntegerField(default=0, blank=False, null=False)
+    time = models.FloatField(default=5.0, blank=False, null=False)
+

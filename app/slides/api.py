@@ -4,7 +4,7 @@ from string import upper
 from django.http import HttpResponse
 from tastypie.exceptions import ImmediateHttpResponse
 
-from .presentation.models import Presentation
+from .presentation.models import Presentation, PresentationAsset
 from .asset.models import Asset
 
 # https://gist.github.com/robhudson/3848832
@@ -39,13 +39,22 @@ class CORSResource(object):
 
         return request_method
 
+
 class AssetResource(CORSResource, ModelResource):
     class Meta:
         queryset = Asset.objects.all()
-        resource_name = 'asset'
+        resource_name = 'assets'
+
+class PresentationAssetResource(CORSResource, ModelResource):
+    asset = fields.ToOneField(AssetResource, 'asset', full=True)
+
+    class Meta:
+        queryset = PresentationAsset.objects.all()
 
 class PresentationResource(CORSResource, ModelResource):
-    assets = fields.ToManyField(AssetResource, 'assets', full=True)
+    assets = fields.ToManyField(PresentationAssetResource,
+        attribute=lambda bundle: bundle.obj.assets.through.objects.filter(
+            presentation=bundle.obj) or bundle.obj.assets, full=True)
 
     class Meta:
         queryset = Presentation.objects.all()
