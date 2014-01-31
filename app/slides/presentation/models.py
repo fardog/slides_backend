@@ -21,3 +21,6 @@ class PresentationAsset(models.Model):
     order = models.IntegerField(default=0, blank=False, null=False)
     time = models.FloatField(default=5.0, blank=False, null=False)
 
+    class Meta:
+        ordering = ["order"]
+

@@ -39,7 +39,8 @@ class CORSResource(object):
 
         return request_method
 
-
+# http://stackoverflow.com/questions/10629047/django-tastypie-and-many-to-many-through-relationships
+# http://eugene-yeo.me/2012/12/4/django-tastypie-manytomany-through-part-2/
 class AssetResource(CORSResource, ModelResource):
     class Meta:
         queryset = Asset.objects.all()
