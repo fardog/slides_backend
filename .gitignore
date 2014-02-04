@@ -56,5 +56,5 @@ docs/_build/
 uploads
 
 # Local Settings
-settings_*.py
+**/settings/local.py
 *.sqlite3
