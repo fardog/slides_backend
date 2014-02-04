@@ -12,6 +12,8 @@ class Asset(models.Model):
     name = models.CharField(max_length=30, blank=False, null=False)
     path = models.FileField(upload_to='media')
 
+    last_modified = models.DateTimeField(auto_now=True)
+
     asset_type = models.ForeignKey(AssetType, blank=False, null=False)
 
     def __unicode__(self):

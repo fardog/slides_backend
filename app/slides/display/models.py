@@ -8,5 +8,7 @@ class Display(models.Model):
 
     presentation = models.ForeignKey(Presentation, blank=False, null=False)
 
+    last_modified = models.DateTimeField(auto_now=True)
+
     def __unicode__(self):
         return u'%s' % (self.name)

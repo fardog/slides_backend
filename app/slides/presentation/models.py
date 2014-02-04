@@ -10,6 +10,8 @@ class Presentation(models.Model):
 
     assets = models.ManyToManyField(Asset, through='PresentationAsset')
 
+    last_modified = models.DateTimeField(auto_now=True)
+
     def __unicode__(self):
         return u'%s' % (self.name)
 
