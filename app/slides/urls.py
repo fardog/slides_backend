@@ -5,11 +5,12 @@ from django.contrib import admin
 admin.autodiscover()
 
 from tastypie.api import Api
-from slides.api import PresentationResource, AssetResource
+from slides.api import PresentationResource, AssetResource, DisplayResource
 
 v1_api = Api(api_name='v1')
 v1_api.register(PresentationResource())
 v1_api.register(AssetResource())
+v1_api.register(DisplayResource())
 
 urlpatterns = patterns('',
     # Examples:

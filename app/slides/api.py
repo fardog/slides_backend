@@ -1,11 +1,12 @@
 from tastypie import fields
-from tastypie.resources import ModelResource
+from tastypie.resources import ModelResource, ALL
 from string import upper
 from django.http import HttpResponse
 from tastypie.exceptions import ImmediateHttpResponse
 
 from .presentation.models import Presentation, PresentationAsset
 from .asset.models import Asset
+from .display.models import Display
 
 # https://gist.github.com/robhudson/3848832
 class CORSResource(object):
@@ -46,11 +47,13 @@ class AssetResource(CORSResource, ModelResource):
         queryset = Asset.objects.all()
         resource_name = 'assets'
 
+
 class PresentationAssetResource(CORSResource, ModelResource):
     asset = fields.ToOneField(AssetResource, 'asset', full=True)
 
     class Meta:
         queryset = PresentationAsset.objects.all()
+
 
 class PresentationResource(CORSResource, ModelResource):
     assets = fields.ToManyField(PresentationAssetResource,
@@ -60,3 +63,15 @@ class PresentationResource(CORSResource, ModelResource):
     class Meta:
         queryset = Presentation.objects.all()
         resource_name = 'presentation'
+
+
+class DisplayResource(CORSResource, ModelResource):
+    presentation = fields.ForeignKey(PresentationResource, 'presentation',
+            full=False)
+
+    class Meta:
+        queryset = Display.objects.all();
+        resource_name = 'display'
+        filtering = {
+            'slug': ALL
+        }

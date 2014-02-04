@@ -43,6 +43,7 @@ INSTALLED_APPS = (
     # slides apps
     'slides.asset',
     'slides.presentation',
+    'slides.display',
 
     # south wants to be last
     'south',
