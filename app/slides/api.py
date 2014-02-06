@@ -5,7 +5,7 @@ from django.http import HttpResponse
 from tastypie.exceptions import ImmediateHttpResponse
 
 from .presentation.models import Presentation, PresentationAsset
-from .asset.models import Asset
+from .asset.models import Asset, AssetType
 from .display.models import Display
 
 # https://gist.github.com/robhudson/3848832
@@ -42,7 +42,14 @@ class CORSResource(object):
 
 # http://stackoverflow.com/questions/10629047/django-tastypie-and-many-to-many-through-relationships
 # http://eugene-yeo.me/2012/12/4/django-tastypie-manytomany-through-part-2/
+class AssetTypeResource(CORSResource, ModelResource):
+    class Meta:
+        queryset = AssetType.objects.all()
+        resource_name = 'asset_type'
+
 class AssetResource(CORSResource, ModelResource):
+    asset_type = fields.ForeignKey(AssetTypeResource, 'asset_type', full=True)
+
     class Meta:
         queryset = Asset.objects.all()
         resource_name = 'assets'

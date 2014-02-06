@@ -21,7 +21,8 @@ class PresentationAsset(models.Model):
     asset = models.ForeignKey(Asset)
 
     order = models.IntegerField(default=0, blank=False, null=False)
-    time = models.FloatField(default=5.0, blank=False, null=False)
+    time = models.FloatField(default=7.0, blank=False, null=False)
+    loop = models.BooleanField(default=False)
 
     class Meta:
         ordering = ["order"]
